@@ -98,10 +98,10 @@ resource "aws_route_table" "priroutetable" {
     vpc_id = "${aws_vpc.vpc.id}"
     route {
       cidr_block = "0.0.0.0/0"
-      nat_gateway_id = "${aws_nat_gateway.gw1.id}"
+      nat_gateway_id = "${aws_nat_gateway.ngw.id}"
     }
 	 
-	propagating_vgws = [ "${aws_vpn_gateway.virtual_gateway.id}" ]
+	propagating_vgws = [ "${aws_vpn_gateway.vgw.id}" ]
 	
     tags { Name = "Private Route Table" }
 }
