@@ -1,11 +1,3 @@
-#------------------------------------------- 
-# Ensono Managed VPC - 4 subnets ( 2 public, 2 private) , internet gateway, 1 nat gateway.
-#------------------------------------------- 
-
-#------------------------------------------- 
-# VPC
-#------------------------------------------- 
-
 resource "aws_vpc" "vpc" {
     lifecycle { prevent_destroy = "true" }
     cidr_block = "${var.cidr}"
@@ -13,59 +5,96 @@ resource "aws_vpc" "vpc" {
     enable_dns_hostnames = true
 }
 
-#------------------------------------------- 
 # Internet Gateway
-#------------------------------------------- 
-
-resource "aws_internet_gateway" "gw" {
+resource "aws_internet_gateway" "igw" {
     vpc_id = "${aws_vpc.vpc.id}"
 }
 
-#-------------------------------------------
 # Virtual Gateway
-#-------------------------------------------
-
-resource "aws_vpn_gateway" "virtual_gateway" {
+resource "aws_vpn_gateway" "vgw" {
     vpc_id = "${aws_vpc.vpc.id}"
+}
+
+# Route Table
+resource "aws_route_table" "Pubroutetable" {
+    vpc_id = "${aws_vpc.vpc.id}"
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = "${aws_internet_gateway.igw.id}"
+    }    
+    propagating_vgws = ["${aws_vpn_gateway.vgw.id}"]
+	tags { Name = "Public Route Table" }
+}
+
+# Public Subnet 1
+resource "aws_subnet" "PublicSbA" {
+    vpc_id = "${aws_vpc.vpc.id}"
+    availability_zone = "${var.region}a"
+    cidr_block = "${cidrsubnet(var.cidr,2,2)}"
     tags {
-      Name = "${var.env} vpg"
+        Name = "Public SubnetA"
     }
 }
 
-#------------------------------------------- 
-# Nat Gateway
-#------------------------------------------- 
+# Public Subnet 2
+resource "aws_subnet" "PublicSbB" {
+    vpc_id = "${aws_vpc.vpc.id}"
+    availability_zone = "${var.region}b"
+    cidr_block = "${cidrsubnet(var.cidr,2,3)}"
+    tags {
+        Name = "Public SubnetB"
+    }
+}
 
-resource "aws_eip" "nat1" {
+# Route Table association
+
+resource "aws_route_table_association" "PublicSbA" {
+    subnet_id = "${aws_subnet.PublicSbA.id}"
+    route_table_id = "${aws_route_table.Pubroutetable.id}"
+}
+
+resource "aws_route_table_association" "PublicSbB" {
+    subnet_id = "${aws_subnet.PublicSbB.id}"
+    route_table_id = "${aws_route_table.Pubroutetable.id}"
+}
+
+# NAT Gateway
+
+resource "aws_eip" "ngip" {
     vpc = true
+    tags {
+        Name = "NAT Gateway"
+    }
 }
 
-resource "aws_nat_gateway" "gw1" {
-    allocation_id = "${aws_eip.nat1.id}"
-    subnet_id = "${aws_subnet.publicAzA.id}"
+resource "aws_nat_gateway" "ngw" {
+    allocation_id = "${aws_eip.ngip.id}"
+    subnet_id = "${aws_subnet.PublicSbA.id}"
 }
 
-#------------------------------------------- 
-# Private Subnets
-#------------------------------------------- 
+# Private Subnet1
 
-resource "aws_subnet" "privateAzA" {
-    lifecycle { prevent_destroy = "True" }
+resource "aws_subnet" "PrivateSbA" {
     vpc_id = "${aws_vpc.vpc.id}"
     availability_zone = "${var.region}a"
     cidr_block = "${cidrsubnet(var.cidr,2,0)}"
-    tags { Name = "Private Subnet AzA" }
+    tags {
+        Name = "Private Subnet1"
+    }
 }
 
-resource "aws_subnet" "privateAzB" {
-    lifecycle { prevent_destroy = "True" }
+# Private Subnet2
+
+resource "aws_subnet" "PrivateSbB" {
     vpc_id = "${aws_vpc.vpc.id}"
     availability_zone = "${var.region}b"
     cidr_block = "${cidrsubnet(var.cidr,2,1)}"
-    tags { Name = "Private Subnet AzB" }
+    tags {
+        Name = "Private Subnet2"
+    }
 }
 
-resource "aws_route_table" "private_route_table_AzA" {
+resource "aws_route_table" "priroutetable" {
     vpc_id = "${aws_vpc.vpc.id}"
     route {
       cidr_block = "0.0.0.0/0"
@@ -74,60 +103,15 @@ resource "aws_route_table" "private_route_table_AzA" {
 	 
 	propagating_vgws = [ "${aws_vpn_gateway.virtual_gateway.id}" ]
 	
-    tags { Name = "Private Route Table AZ-A" }
+    tags { Name = "Private Route Table" }
 }
 
-resource "aws_route_table_association" "privateAzA" {
-    subnet_id = "${aws_subnet.privateAzA.id}"
-    route_table_id = "${aws_route_table.private_route_table_AzA.id}"
+resource "aws_route_table_association" "PrivateSbA" {
+    subnet_id = "${aws_subnet.PrivateSbA.id}"
+    route_table_id = "${aws_route_table.priroutetable.id}"
 }
 
-resource "aws_route_table_association" "privateAzB" {
-    subnet_id = "${aws_subnet.privateAzB.id}"
-    route_table_id = "${aws_route_table.private_route_table_AzA.id}"
+resource "aws_route_table_association" "PrivateSbB" {
+    subnet_id = "${aws_subnet.PrivateSbB.id}"
+    route_table_id = "${aws_route_table.priroutetable.id}"
 }
-
-#------------------------------------------- 
-# Public Subnets
-#------------------------------------------- 
-
-resource "aws_route_table" "public_route_table" {
-    vpc_id = "${aws_vpc.vpc.id}"
-    route {
-      cidr_block = "0.0.0.0/0"
-      gateway_id = "${aws_internet_gateway.gw.id}"
-	}
-	propagating_vgws = [ "${aws_vpn_gateway.virtual_gateway.id}" ] 
-    tags { Name = "Public Route Table" }
-}
-
-resource "aws_subnet" "publicAzA" {
-    lifecycle { prevent_destroy = "True" }
-    vpc_id = "${aws_vpc.vpc.id}"
-    availability_zone = "${var.region}a"
-    cidr_block = "${cidrsubnet(var.cidr,2,2)}"
-    tags { Name = "Public Subnet AzA" }
-}
-
-resource "aws_subnet" "publicAzB" {
-    lifecycle { prevent_destroy = "True" }
-    vpc_id = "${aws_vpc.vpc.id}"
-    availability_zone = "${var.region}b"
-    cidr_block = "${cidrsubnet(var.cidr,2,3)}"
-    tags { Name = "Public Subnet AzB" }
-}
-
-resource "aws_route_table_association" "publicAzA" {
-    subnet_id = "${aws_subnet.publicAzA.id}"
-    route_table_id = "${aws_route_table.public_route_table.id}"
-}
-
-resource "aws_route_table_association" "publicAzB" {
-    subnet_id = "${aws_subnet.publicAzB.id}"
-    route_table_id = "${aws_route_table.public_route_table.id}"
-}
-
-
-
-
-
