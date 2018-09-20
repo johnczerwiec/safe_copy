@@ -12,7 +12,12 @@ resource "aws_internet_gateway" "igw" {
 
 # Virtual Gateway
 resource "aws_vpn_gateway" "vgw" {
-    vpc_id = "${aws_vpc.vpc.id}"
+    amazon_side_asn = 65070
+    vpc_id = "${aws_vpc.vpc.id}"
+  
+tags {   
+    Name = "${var.env} vpg"
+  }  
 }
 
 # Route Table
@@ -79,7 +84,7 @@ resource "aws_subnet" "PrivateSbA" {
     availability_zone = "${var.region}a"
     cidr_block = "${cidrsubnet(var.cidr,2,0)}"
     tags {
-        Name = "Private Subnet1"
+        Name = "Private SubnetA"
     }
 }
 
@@ -90,7 +95,7 @@ resource "aws_subnet" "PrivateSbB" {
     availability_zone = "${var.region}b"
     cidr_block = "${cidrsubnet(var.cidr,2,1)}"
     tags {
-        Name = "Private Subnet2"
+        Name = "Private SubnetB"
     }
 }
 
