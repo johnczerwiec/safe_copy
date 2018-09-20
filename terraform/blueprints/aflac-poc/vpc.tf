@@ -12,12 +12,11 @@ resource "aws_internet_gateway" "igw" {
 
 # Virtual Gateway
 resource "aws_vpn_gateway" "vgw" {
-    amazon_side_asn = 65070
-    vpc_id = "${aws_vpc.vpc.id}"
-  
-tags {   
-    Name = "${var.env} vpg"
-  }  
+   amazon_side_asn = 65070
+   vpc_id = "${aws_vpc.vpc.id}"
+    tags {
+      Name = "${var.env} vpg"
+    }
 }
 
 # Route Table
