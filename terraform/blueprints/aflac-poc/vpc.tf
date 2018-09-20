@@ -64,7 +64,7 @@ resource "aws_subnet" "publicAzA" {
     lifecycle { prevent_destroy = "True" }
     vpc_id = "${aws_vpc.vpc.id}"
     availability_zone = "${var.region}a"
-    cidr_block = "${cidrsubnet(var.cidr,3,0)}"
+    cidr_block = "${cidrsubnet(var.cidr,2,2)}"
     tags { Name = "Public Subnet AzA" }
 }
 
@@ -72,7 +72,7 @@ resource "aws_subnet" "publicAzB" {
     lifecycle { prevent_destroy = "True" }
     vpc_id = "${aws_vpc.vpc.id}"
     availability_zone = "${var.region}b"
-    cidr_block = "${cidrsubnet(var.cidr,3,1)}"
+    cidr_block = "${cidrsubnet(var.cidr,2,3)}"
     tags { Name = "Public Subnet AzB" }
 }
 
@@ -95,7 +95,7 @@ resource "aws_subnet" "privateAzA" {
     lifecycle { prevent_destroy = "True" }
     vpc_id = "${aws_vpc.vpc.id}"
     availability_zone = "${var.region}a"
-    cidr_block = "${cidrsubnet(var.cidr,3,3)}"
+    cidr_block = "${cidrsubnet(var.cidr,2,0)}"
     tags { Name = "Private Subnet AzA" }
 }
 
@@ -103,7 +103,7 @@ resource "aws_subnet" "privateAzB" {
     lifecycle { prevent_destroy = "True" }
     vpc_id = "${aws_vpc.vpc.id}"
     availability_zone = "${var.region}b"
-    cidr_block = "${cidrsubnet(var.cidr,3,4)}"
+    cidr_block = "${cidrsubnet(var.cidr,2,1)}"
     tags { Name = "Private Subnet AzB" }
 }
 
