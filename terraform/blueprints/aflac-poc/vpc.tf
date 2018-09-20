@@ -45,6 +45,47 @@ resource "aws_nat_gateway" "gw1" {
     subnet_id = "${aws_subnet.publicAzA.id}"
 }
 
+#------------------------------------------- 
+# Private Subnets
+#------------------------------------------- 
+
+resource "aws_subnet" "privateAzA" {
+    lifecycle { prevent_destroy = "True" }
+    vpc_id = "${aws_vpc.vpc.id}"
+    availability_zone = "${var.region}a"
+    cidr_block = "${cidrsubnet(var.cidr,2,0)}"
+    tags { Name = "Private Subnet AzA" }
+}
+
+resource "aws_subnet" "privateAzB" {
+    lifecycle { prevent_destroy = "True" }
+    vpc_id = "${aws_vpc.vpc.id}"
+    availability_zone = "${var.region}b"
+    cidr_block = "${cidrsubnet(var.cidr,2,1)}"
+    tags { Name = "Private Subnet AzB" }
+}
+
+resource "aws_route_table" "private_route_table_AzA" {
+    vpc_id = "${aws_vpc.vpc.id}"
+    route {
+      cidr_block = "0.0.0.0/0"
+      nat_gateway_id = "${aws_nat_gateway.gw1.id}"
+    }
+	 
+	propagating_vgws = [ "${aws_vpn_gateway.virtual_gateway.id}" ]
+	
+    tags { Name = "Private Route Table AZ-A" }
+}
+
+resource "aws_route_table_association" "privateAzA" {
+    subnet_id = "${aws_subnet.privateAzA.id}"
+    route_table_id = "${aws_route_table.private_route_table_AzA.id}"
+}
+
+resource "aws_route_table_association" "privateAzB" {
+    subnet_id = "${aws_subnet.privateAzB.id}"
+    route_table_id = "${aws_route_table.private_route_table_AzA.id}"
+}
 
 #------------------------------------------- 
 # Public Subnets
@@ -87,46 +128,6 @@ resource "aws_route_table_association" "publicAzB" {
 }
 
 
-#------------------------------------------- 
-# Private Subnets
-#------------------------------------------- 
 
-resource "aws_subnet" "privateAzA" {
-    lifecycle { prevent_destroy = "True" }
-    vpc_id = "${aws_vpc.vpc.id}"
-    availability_zone = "${var.region}a"
-    cidr_block = "${cidrsubnet(var.cidr,2,0)}"
-    tags { Name = "Private Subnet AzA" }
-}
-
-resource "aws_subnet" "privateAzB" {
-    lifecycle { prevent_destroy = "True" }
-    vpc_id = "${aws_vpc.vpc.id}"
-    availability_zone = "${var.region}b"
-    cidr_block = "${cidrsubnet(var.cidr,2,1)}"
-    tags { Name = "Private Subnet AzB" }
-}
-
-resource "aws_route_table" "private_route_table_AzA" {
-    vpc_id = "${aws_vpc.vpc.id}"
-    route {
-      cidr_block = "0.0.0.0/0"
-      nat_gateway_id = "${aws_nat_gateway.gw1.id}"
-    }
-	 
-	propagating_vgws = [ "${aws_vpn_gateway.virtual_gateway.id}" ]
-	
-    tags { Name = "Private Route Table AZ-A" }
-}
-
-resource "aws_route_table_association" "privateAzA" {
-    subnet_id = "${aws_subnet.privateAzA.id}"
-    route_table_id = "${aws_route_table.private_route_table_AzA.id}"
-}
-
-resource "aws_route_table_association" "privateAzB" {
-    subnet_id = "${aws_subnet.privateAzB.id}"
-    route_table_id = "${aws_route_table.private_route_table_AzA.id}"
-}
 
 
