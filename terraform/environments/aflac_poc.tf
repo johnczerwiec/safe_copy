@@ -1,7 +1,7 @@
 module environment {
   source = "../../terraform/blueprints/aflac-poc"
 
-  env                = "poc"                                # e.g. prod
+  env                = "aflac-poc"                                # e.g. prod
   vpc_name           = "AFLACPOCVPC"                        # e.g. Prod VPC
   cidr               = "10.42.36.0/25"                      # e.g. 10.72.192.0.21
   region             = "us-east-2"                          # e.g. eu-west-1

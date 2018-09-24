@@ -21,3 +21,9 @@ variable "Web_autoscale_min_size"    { default=""   description="e.g. 1" }
 variable "Web_autoscale_max_size"    { default=""   description="e.g. 3" }
 variable "Web_autoscale_image_id"    { default=""   description="e.g. ami-4db9df3e" } 
 
+
+#------------------------------------------------
+# Client Solution Specific Variables
+#------------------------------------------------
+variable "ebs_opt_web" { default="True"    description="whether or not EBS optimisation is enabled on supported instances" }
+
