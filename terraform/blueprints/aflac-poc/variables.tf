@@ -2,16 +2,16 @@
 # Variables
 #------------------------------------------------
 
-variable "env"            { default=""   description="e.g. prod" }
-variable "vpc_name"       { default=""   description="e.g. Prod VPC" }
-variable "cidr"           { default=""   description="e.g. 10.72.176.0/21" }
-variable "region"         { default=""   description="e.g. eu-west-1" }
-variable "ci_prefix"      { default=""   description="e.g. ccm43" }
-variable "ci_suffix"      { default=""   description="e.g. ccm43" }
-variable "monitoring_tag" { default=""   description="e.g. datadog|not-required" }
-variable "backup_tag"     { default=""   description="e.g. ccm_poc_daily" }
-variable "s3_bucket"      { default=""   description="e.g. ccm-poc" }
-variable "key_name"       { default=""   description="e.g. ccm-poc" }
+variable "env"            { default="aflac-poc"   		description="e.g. prod" }
+variable "vpc_name"       { default="AFLACPOCVPC"   	description="e.g. Prod VPC" }
+variable "cidr"           { default="10.42.36.0/25"   	description="e.g. 10.72.176.0/21" }
+variable "region"         { default="us-east-2"   		description="e.g. eu-west-1" }
+variable "ci_prefix"      { default="afl40"   			description="e.g. ccm43" }
+variable "ci_suffix"      { default="poc"   			description="e.g. ccm43" }
+variable "monitoring_tag" { default="not-required"   	description="e.g. datadog|not-required" }
+variable "backup_tag"     { default="not-backup"   		description="e.g. ccm_poc_daily" }
+variable "s3_bucket"      { default="aflac-poc"   		description="e.g. ccm-poc" }
+variable "key_name"       { default="aflac-poc"   		description="e.g. ccm-poc" }
 
 #------------------------------------------------
 # Autoscaling
