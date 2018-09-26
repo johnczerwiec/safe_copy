@@ -18,7 +18,7 @@ resource "aws_instance" "gic01" {
   subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
   iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
   ebs_optimized         	 = "${var.ebs_opt_web}"
-  user_data 			 	 = "${data.template_file.windows_userdata.rendered}"
+#  user_data 			 	 = "${data.template_file.windows_userdata.rendered}"
 # disable_api_termination 	 = "true"
 
   tags {
