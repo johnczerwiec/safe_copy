@@ -17,9 +17,9 @@ variable "key_name"       { default="aflac-poc"   		description="e.g. ccm-poc" }
 # Autoscaling
 #------------------------------------------------
 
-variable "Web_autoscale_min_size"    { default=""   description="e.g. 1" }
-variable "Web_autoscale_max_size"    { default=""   description="e.g. 3" }
-variable "Web_autoscale_image_id"    { default=""   description="e.g. ami-4db9df3e" } 
+#variable "Web_autoscale_min_size"    { default=""   description="e.g. 1" }
+#variable "Web_autoscale_max_size"    { default=""   description="e.g. 3" }
+#variable "Web_autoscale_image_id"    { default=""   description="e.g. ami-4db9df3e" } 
 
 
 #------------------------------------------------
