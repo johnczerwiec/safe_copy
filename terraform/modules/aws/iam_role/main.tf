@@ -16,7 +16,7 @@
 # service is optional - typically ec2.amazonaws.com or ecs.amazonaws.com
 #--------------------------------------------------------------------
 
-resource "aws_iam_role" "role" {
+resource "aws_iam_role" "Web" {
   name = "${var.name}"
   path = "/"
   assume_role_policy = <<EOF
@@ -38,7 +38,7 @@ EOF
 
 resource "aws_iam_instance_profile" "profile" {
     name = "${var.name}"
-    role = "${aws_iam_role.role.name}"
+    role = "${aws_iam_role.Web.name}"
 }
 
 resource "aws_iam_policy" "policy" {
