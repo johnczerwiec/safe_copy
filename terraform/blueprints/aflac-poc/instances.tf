@@ -3,7 +3,7 @@
 #----------------------------------------------------- 
 resource "template_file" "windows_userdata" {
 	template = "${file("/home/aflac-poc/git/terraform/blueprints/aflac-poc/files/windows_userdata.tpl")}"
-    vars { s3_config_bucket = "${var.s3_config_bucket}" }
+    vars { s3_config_bucket = "${var.s3_bucket}" }
 }
 
 #----------------------------------------------------- 
