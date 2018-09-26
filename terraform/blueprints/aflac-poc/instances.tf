@@ -8,7 +8,7 @@ resource "aws_instance" "afl40gic01poc" {
   key_name               	 = "${var.key_name}"
   vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}" ]
   subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
-  iam_instance_profile  	 = "${module.iam_role_web.iam_instance_profile}"
+  iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
   ebs_optimized         	 = "${var.ebs_opt_web}"
   user_data 			 	 = "${data.template_file.windows_userdata.rendered}"
 # disable_api_termination 	 = "true"
