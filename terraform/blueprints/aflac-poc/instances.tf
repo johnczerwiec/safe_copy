@@ -1,7 +1,15 @@
 #----------------------------------------------------- 
+# windows_userdata
+#----------------------------------------------------- 
+resource "template_file" "windows_userdata" {
+	template = "${file("/home/aflac-poc/git/terraform/blueprints/aflac-poc/files/windows_userdata.tpl")}"
+    vars { s3_config_bucket = "${var.s3_config_bucket}" }
+}
+
+#----------------------------------------------------- 
 # afl40gic01poc
 #-----------------------------------------------------
-resource "aws_instance" "afl40gic01poc" {
+resource "aws_instance" "gic01" {
 # lifecycle { prevent_destroy = "true" }
   ami                   	 = "ami-0d2cde2c50d4d1fc2"
   instance_type          	 = "m5.4xlarge"
