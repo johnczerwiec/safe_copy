@@ -10,7 +10,7 @@ resource "aws_instance" "afl40gic01poc" {
   subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
   iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
   ebs_optimized         	 = "${var.ebs_opt_web}"
-  user_data 			 	 = "${data.template_file.windows_userdata.rendered}"
+  user_data 			 	 = "${data.template_file.windows_userdata}"
 # disable_api_termination 	 = "true"
 
   tags {
