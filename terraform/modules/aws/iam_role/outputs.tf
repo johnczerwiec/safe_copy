@@ -14,6 +14,6 @@ output "iam_instance_profile" {
 # IAM role used with some service resources e.g. ECS
 
 output "iam_role" {
-    value = "${aws_iam_role.Web.arn}"
+    value = "${aws_iam_role.role.arn}"
 }
 
