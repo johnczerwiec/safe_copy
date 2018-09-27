@@ -1,5 +1,5 @@
 module environment {
-  source = "../../terraform/blueprints/aflac-poc"
+  source = "../../blueprints/aflac-poc"
 
   env                = "aflac-poc"                          # e.g. prod
   vpc_name           = "AFLACPOCVPC"                        # e.g. Prod VPC
