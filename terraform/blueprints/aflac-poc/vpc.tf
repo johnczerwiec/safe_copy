@@ -5,12 +5,35 @@ resource "aws_vpc" "vpc" {
     enable_dns_hostnames = true
 }
 
+#------------------------------------------- 
+# VPC Peering Connection
+#------------------------------------------- 
+
+resource "aws_vpc_peering_connection" "vpc_pcx_ensmgmt" {
+  peer_owner_id = "${var.peer_owner_id}"
+  peer_vpc_id   = "${var.peer_vpc_id}"
+  peer_region   = "${var.peer_region}"
+  vpc_id        = "${aws_vpc.vpc.id}"
+  #auto_accept   = true
+
+  tags {
+
+    Name = "VPC Peering between Aflac POC and ens-mgmt"
+  }
+}
+
+#------------------------------------------- 
 # Internet Gateway
+#------------------------------------------- 
+
 resource "aws_internet_gateway" "igw" {
     vpc_id = "${aws_vpc.vpc.id}"
 }
 
+#------------------------------------------- 
 # Virtual Gateway
+#------------------------------------------- 
+
 resource "aws_vpn_gateway" "vgw" {
    amazon_side_asn = 65070
    vpc_id = "${aws_vpc.vpc.id}"
@@ -106,10 +129,10 @@ resource "aws_route_table" "priroutetable" {
       cidr_block = "0.0.0.0/0"
       nat_gateway_id = "${aws_nat_gateway.ngw.id}"
     }
-	route {
-      cidr_block = "${data.aws_vpc_peering_connection.aflac-poc-adminvpc-peering.peer_cidr_block}"
-      vpc_peering_connection_id = "${data.aws_vpc_peering_connection.aflac-poc-adminvpc-peering.id}"
-	}	
+    route {
+    cidr_block = "${var.cidr_ensmgmt}"
+    gateway_id = "${aws_vpc_peering_connection.vpc_pcx_ensmgmt.id}"
+    }	
 	propagating_vgws = [ "${aws_vpn_gateway.vgw.id}" ]
 	tags { Name = "Private Route Table" }
 }
