@@ -12,6 +12,11 @@ variable "monitoring_tag" { default="not-required"   	description="e.g. datadog|
 variable "backup_tag"     { default="not-backup"   		description="e.g. ccm_poc_daily" }
 variable "s3_bucket"      { default="aflac-poc"   		description="e.g. ccm-poc" }
 variable "key_name"       { default="aflac-poc"   		description="e.g. ccm-poc" }
+variable "cidr_ensmgmt"   { default="" 					description="e.g. 10.72.192.0/21" }
+variable "peer_owner_id"  { default="" 					description="e.g. Peer account number" }
+variable "peer_vpc_id"    { default="" 					description="e.g. vpc-XXXXXXXX" }
+variable "peer_region"    { default="" 					description="e.g. us-east-1" }
+
 
 #------------------------------------------------
 # Autoscaling
