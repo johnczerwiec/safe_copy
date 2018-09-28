@@ -108,7 +108,7 @@ resource "aws_route_table" "priroutetable" {
     }
 	route {
       cidr_block = "${data.aws_vpc_peering_connection.aflac-poc-adminvpc-peering.peer_cidr_block}"
-      vpc_peering_connection_id = "${data.aws_vpc_peering_connection.wdspoc-adminvpc-peering.id}"
+      vpc_peering_connection_id = "${data.aws_vpc_peering_connection.aflac-poc-adminvpc-peering.id}"
 	}	
 	propagating_vgws = [ "${aws_vpn_gateway.vgw.id}" ]
 	tags { Name = "Private Route Table" }
