@@ -87,6 +87,8 @@ resource "aws_subnet" "PrivateSbA" {
     }
 }
 
+
+
 # Private Subnet2
 
 resource "aws_subnet" "PrivateSbB" {
@@ -104,11 +106,14 @@ resource "aws_route_table" "priroutetable" {
       cidr_block = "0.0.0.0/0"
       nat_gateway_id = "${aws_nat_gateway.ngw.id}"
     }
-	 
+	route {
+      cidr_block = "${data.aws_vpc_peering_connection.aflac-poc-adminvpc-peering.peer_cidr_block}"
+      vpc_peering_connection_id = "${data.aws_vpc_peering_connection.wdspoc-adminvpc-peering.id}"
+	}	
 	propagating_vgws = [ "${aws_vpn_gateway.vgw.id}" ]
-	
-    tags { Name = "Private Route Table" }
+	tags { Name = "Private Route Table" }
 }
+
 
 resource "aws_route_table_association" "PrivateSbA" {
     subnet_id = "${aws_subnet.PrivateSbA.id}"
