@@ -13,3 +13,21 @@ module environment {
   s3_bucket          = "aflac-poc"                          # e.g. ccm-poc
 
 }
+
+ data "terraform_remote_state" "selfvpc" {
+  backend = "s3"
+  config {
+    bucket = "aflac-poc-tfstate"
+    key = "aflac-poc.terraform.tfstate"
+    region  = "us-east-2"
+  }
+ }
+
+ terraform {
+  backend "s3" {
+    region  = "us-east-2"
+    bucket  = "aflac-poc-tfstate"
+    key     = "aflac-poc.terraform.tfstate"
+    encrypt = true
+  }
+ }
