@@ -36,3 +36,41 @@ resource "aws_security_group" "ensono_mgmt" {
     cidr_blocks = [ "0.0.0.0/0" ]
   }
 }
+
+#------------------------------------------------------
+# Web Security Group
+#------------------------------------------------------
+
+resource "aws_security_group" "cust_sg" {
+  name = "aflac_sg"
+  description = "Aflac GIC Security Group"
+  vpc_id = "${aws_vpc.vpc.id}"
+
+ # Oracle Weblogic
+
+  ingress {
+    from_port = 3389
+    to_port = 3389
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/8"; "10.48.24.0/24"; "172.16.0.0/12"; "192.168.0.0/16" ]
+  }
+  
+  
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "icmp"
+    cidr_blocks = ["0.0.0.0/0" ]
+  }
+
+
+ # OUTBOUND
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+
+}
