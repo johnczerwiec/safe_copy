@@ -6,7 +6,7 @@ resource "aws_instance" "gic01" {
   ami                   	 = "ami-0d2cde2c50d4d1fc2"
   instance_type          	 = "m5.4xlarge"
   key_name               	 = "${var.key_name}"
-  vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}" ]
+  vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.aflac_sg.id}" ]
   subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
   iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
   ebs_optimized         	 = "${var.ebs_opt_web}"
