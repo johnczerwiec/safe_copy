@@ -46,19 +46,24 @@ resource "aws_security_group" "cust_sg" {
   description = "Aflac GIC Security Group"
   vpc_id = "${aws_vpc.vpc.id}"
 
- # Oracle Weblogic
-
+ 
   ingress {
     from_port = 3389
     to_port = 3389
     protocol = "tcp"
     cidr_blocks = ["10.0.0.0/8", "10.48.24.0/24", "172.16.0.0/12", "192.168.0.0/16" ]
   }
-  
+ 
+   ingress {
+    from_port = 27011
+    to_port = 27020
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/8", "10.48.24.0/24", "172.16.0.0/12", "192.168.0.0/16" ]
+  }
   
   ingress {
     from_port = 0
-    to_port = 65535
+    to_port = 0
     protocol = "icmp"
     cidr_blocks = ["0.0.0.0/0" ]
   }
