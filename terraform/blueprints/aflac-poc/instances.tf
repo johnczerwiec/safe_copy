@@ -26,5 +26,4 @@ resource "aws_instance" "gic01" {
     volume_type = "gp2"
     volume_size = "50"
   }
-  
 }
