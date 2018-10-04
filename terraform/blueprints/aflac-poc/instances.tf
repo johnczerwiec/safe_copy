@@ -21,4 +21,10 @@ resource "aws_instance" "gic01" {
     volume_type = "gp2"
     volume_size = "500"
   }
+ ebs_block_device {
+    device_name = "xvdb"
+    volume_type = "gp2"
+    volume_size = "50"
+  }
+  
 }
