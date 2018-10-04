@@ -129,10 +129,13 @@ resource "aws_route_table" "priroutetable" {
       cidr_block = "0.0.0.0/0"
       nat_gateway_id = "${aws_nat_gateway.ngw.id}"
     }
-    route {
-    cidr_block = "${var.cidr_ensmgmt}"
-    gateway_id = "${aws_vpc_peering_connection.vpc_pcx_ensmgmt.id}"
-    }	
+#   route {
+#   cidr_block = "${var.cidr_ensmgmt}"
+#    gateway_id = "${aws_vpc_peering_connection.vpc_pcx_ensmgmt.id}"
+	route {
+      cidr_block = "${data.aws_vpc_peering_connection.aflacpoc-adminvpc-peering.peer_cidr_block}"
+      vpc_peering_connection_id = "${data.aws_vpc_peering_connection.aflacpoc-adminvpc-peering.id}"
+	}
 	propagating_vgws = [ "${aws_vpn_gateway.vgw.id}" ]
 	tags { Name = "Private Route Table" }
 }
