@@ -1,0 +1,51 @@
+{
+  "variables": {
+    "region"              : "us-east-2", 
+    "vpc_id"              : "vpc-0c8451b45b6036607",
+    "subnet_id"           : "subnet-0b78e36dc58c18670",
+    "instance_type"       : "m5.4xlarge",
+    "source_ami"          : "ami-0d2cde2c50d4d1fc2",
+    "ami_name"            : "Aflacgic-Windows2012R2-{{timestamp}}",
+    "user_data_file"      : "userdata.txt",
+    "ssh_username"        : "ec2-user",
+    "ssh_keypair_name"    : "aflac-poc",
+    "ssh_private_key_file": "/home/aflac-poc/.ssh/id_rsa",
+    "iam_instance_profile": "Web",
+    "playbook"            : "playbook.yml",
+    "description_tag"     : "aflac-gic-poc master instance",
+    "name_tag"            : "aflac-gic"
+  },
+  "builders": [{
+    "type"                        : "amazon-ebs",
+    "region"                      : "{{user `region`}}",
+    "vpc_id"                      : "{{user `vpc_id`}}",
+    "subnet_id"                   : "{{user `subnet_id`}}",
+    "associate_public_ip_address" : "true",
+    "instance_type"               : "{{user `instance_type`}}",
+    "source_ami"                  : "{{user `source_ami`}}",
+    "ami_name"                    : "{{user `ami_name`}}",
+    "iam_instance_profile"        : "{{user `iam_instance_profile`}}",
+    "user_data_file"              : "{{user `user_data_file`}}",
+    "ssh_keypair_name"            : "{{user `ssh_keypair_name`}}",
+    "ssh_private_key_file"        : "{{user `ssh_private_key_file`}}",
+    "ssh_private_ip"              : "true",
+    "communicator"                : "winrm",
+    "winrm_username"              : "Administrator",
+    "winrm_use_ssl"               : "true",
+    "winrm_insecure"              : "true",
+    "run_tags"                    : {
+      "Description"               : "{{user `description_tag`}}",
+      "Name"                      : "{{user `name_tag`}}"
+    }
+  }],
+  "provisioners": [
+    {
+      "type"              : "shell-local",
+      "command"           : "ansible-playbook -vvv {{user `playbook`}}"
+    },
+    {
+      "type"              : "windows-shell",
+      "inline"            : [ "\"C:/Program Files/Amazon/Ec2ConfigService/ec2config.exe\" -sysprep" ]
+    }
+  ]
+}
