@@ -1,0 +1,3 @@
+[windows]
+afl40gic01poc ansible_host=10.42.36.11
+
