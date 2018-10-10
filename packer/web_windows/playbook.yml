@@ -1,6 +1,0 @@
----
-
-- hosts: aflac-gic
-
-  roles:
-    - win_web

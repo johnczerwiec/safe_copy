@@ -1,0 +1,66 @@
+﻿{
+  "IsEnabled": true,
+  "EngineConfiguration": {
+    "Components": [
+       {
+        "FullName": "AWS.EC2.Windows.CloudWatch.EventLog.EventLogInputComponent,AWS.EC2.Windows.CloudWatch",
+        "Id": "SystemEventLog",
+        "Parameters": {
+          "Levels": "7",
+          "LogName": "System"
+        }
+      },
+      {
+        "FullName": "AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch",
+        "Id": "IISLog",
+        "Parameters": {
+          "CultureName": "en-US",
+          "Encoding": "UTF-8",
+          "Filter": "",
+          "LineCount": "5",
+          "LogDirectoryPath": "D:\\Logs\\IIS\\RVWebService\\W3SVC1",
+          "TimeZoneKind": "UTC",
+          "TimestampFormat": "yyyy-MM-dd HH:mm:ss"
+        }
+      },
+      {
+        "FullName": "AWS.EC2.Windows.CloudWatch.CloudWatchLogsOutput,AWS.EC2.Windows.CloudWatch",
+        "Id": "CloudWatchLogs",
+        "Parameters": {
+          "AccessKey": "",
+          "LogGroup": "Prod-IIS-Log-Group",
+          "LogStream": "{instance_id}",
+          "Region": "eu-west-2",
+          "SecretKey": ""
+        }
+      },
+      {
+        "FullName": "AWS.EC2.Windows.CloudWatch.CloudWatch.CloudWatchOutputComponent,AWS.EC2.Windows.CloudWatch",
+        "Id": "CloudWatch",
+        "Parameters": {
+          "AccessKey": "",
+          "NameSpace": "Windows/Default",
+          "Region": "eu-west-2",
+          "SecretKey": ""
+        }
+      },
+      {
+        "FullName": "AWS.EC2.Windows.CloudWatch.CloudWatchLogsOutput,AWS.EC2.Windows.CloudWatch",
+        "Id": "CloudWatchLogs-WSB",
+        "Parameters": {
+          "AccessKey": "",
+          "LogGroup": "eGainAutomation-2",
+          "LogStream": "WSB-Sync-2",
+          "Region": "eu-west-2",
+          "SecretKey": ""
+        }
+      }
+    ],
+    "Flows": {
+      "Flows": [
+        "IISLog,CloudWatchLogs"
+        ]
+    },
+    "PollInterval": "00:00:15"
+  }
+}

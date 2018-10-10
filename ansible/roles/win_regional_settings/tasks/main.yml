@@ -1,0 +1,2 @@
+  - include: set_regional_settings.yml
+    tags: ['set_regional_settings']

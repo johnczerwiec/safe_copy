@@ -1,0 +1,5 @@
+---
+- hosts: web-asg-pre-pkr
+  roles:
+    - win_web
+    - win_regional_settings

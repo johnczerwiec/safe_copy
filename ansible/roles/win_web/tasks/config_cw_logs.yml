@@ -1,0 +1,28 @@
+  - name: Enable the Cloud Watch Plugin
+    script: enable_cw_logs.ps1
+    
+  - name: Copy over the AWS.EC2.Windows.CloudWatch.json file to settings folder if the build is for Pre-Prod
+    win_copy: src="AWS.EC2.Windows.CloudWatch-pre.json" dest="C:\Program Files\Amazon\Ec2ConfigService\Settings\AWS.EC2.Windows.CloudWatch.json"
+    when: "'pre' in group_names"
+    
+  - name: Copy over the AWS.EC2.Windows.CloudWatch.json file to SSM folder if the build is for Pre-Prod
+    win_copy: src="AWS.EC2.Windows.CloudWatch-pre.json" dest="C:\Program Files\Amazon\SSM\Plugins\AWSCloudWatch\AWS.EC2.Windows.CloudWatch.json"
+    when: "'pre' in group_names"
+    
+  - name: Copy over the AWS.EC2.Windows.CloudWatch.json file to settings folder if the build is for Prod
+    win_copy: src="AWS.EC2.Windows.CloudWatch-prd.json" dest="C:\Program Files\Amazon\Ec2ConfigService\Settings\AWS.EC2.Windows.CloudWatch.json"
+    when: "'prd' in group_names"
+    
+  - name: Copy over the AWS.EC2.Windows.CloudWatch.json file to SSM folder if the build is for Prod
+    win_copy: src="AWS.EC2.Windows.CloudWatch-prd.json" dest="C:\Program Files\Amazon\SSM\Plugins\AWSCloudWatch\AWS.EC2.Windows.CloudWatch.json"
+    when: "'prd' in group_names"
+    
+  - name: Restart the EC2 Config Service
+    win_service:
+      name: Ec2Config
+      state: restarted
+      
+  - name: Restart the Amazon SSMAgent Service
+    win_service:
+      name: AmazonSSMAgent
+      state: restarted

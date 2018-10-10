@@ -1,0 +1,2 @@
+- packer validate 'web_asg_pre-prd_ami.json'
+- packer build 'web_asg_pre-prd_ami.json'

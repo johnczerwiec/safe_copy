@@ -1,19 +1,18 @@
 {
   "variables": {
-    "region"              : "us-east-2", 
+    "source_ami"          : "ami-0d2cde2c50d4d1fc2",
+	"region"              : "us-east-2", 
     "vpc_id"              : "vpc-0c8451b45b6036607",
     "subnet_id"           : "subnet-0b78e36dc58c18670",
     "instance_type"       : "m5.4xlarge",
-    "source_ami"          : "ami-0d2cde2c50d4d1fc2",
+    "user_data_file"      : "../environments/userdata_aflac-poc.txt",
+	"security_group_ids"  : "sg-0c707bef67c1d2d2f, sg-01bb5274d0eddd856",
     "ami_name"            : "Aflacgic-Windows2012R2-{{timestamp}}",
-    "user_data_file"      : "userdata.txt",
-    "ssh_username"        : "ec2-user",
     "ssh_keypair_name"    : "aflac-poc",
     "ssh_private_key_file": "/home/aflac-poc/.ssh/id_rsa",
     "iam_instance_profile": "Web",
-    "playbook"            : "playbook.yml",
     "description_tag"     : "aflac-gic-poc master instance",
-    "name_tag"            : "aflac-gic"
+    "name"            	  : "web-asg-pre-pkr"
   },
   "builders": [{
     "type"                        : "amazon-ebs",

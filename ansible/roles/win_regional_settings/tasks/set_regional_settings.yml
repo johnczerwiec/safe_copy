@@ -1,0 +1,88 @@
+---
+  - name: Set the Culture
+    raw: Set-Culture {{LanguageTag}}
+    
+  - name: Set the System Locale
+    raw: Set-WinSystemLocale {{LanguageTag}}
+    
+  # https://msdn.microsoft.com/en-us/library/windows/desktop/dd374073%28v=vs.85%29.aspx
+  - name: Set the Home Location 
+    raw: Set-WinHomeLocation -GeoId {{HomeLocation}}
+    
+  - name: Set the User Language List
+    raw: Set-WinUserLanguageList {{LanguageTag}} -force
+  
+  - name: Set the Time Zone
+    raw: tzutil.exe /s '{{TimeZone}}'
+    
+  - name: Check whether the Ensono Folder is present
+    win_file: path=c:\\Ensono state=directory
+    
+  - name: Check whether the Registry Folder is present
+    win_file: path=c:\\Ensono\\Regional state=directory
+    
+  - name: Test to see if the International registry keys have been exported
+    raw: $Exported = Test-Path c:\Ensono\Regional\int.reg; $Exported
+    register: IntExported
+    
+  - name: Test to see if the Keyboard Layout Preload registry keys have been exported
+    raw: $Exported = Test-Path c:\Ensono\Regional\Preload.reg; $Exported
+    register: PreloadExported
+    
+#  - name: Test to see if the Desktop MuiCached registry keys have been exported
+#    raw: $Exported = Test-Path c:\Ensono\Regional\MuiCached.reg; $Exported
+#    register: MuiCachedExported
+    
+  - name: Export the current users International settings from the registry
+    raw: reg export 'HKCU\Control Panel\International' c:\Ensono\Regional\int.reg
+    when: IntExported.stdout_lines[0] == "False"
+
+  - name: Export the current users Keyboard Layout Preload settings from the registry
+    raw: reg export 'HKCU\Keyboard Layout\Preload' c:\Ensono\Regional\Preload.reg
+    when: PreloadExported.stdout_lines[0] == "False"
+    
+#  - name: Export the current users Desktop MuiCached settings from the registry
+#    raw: reg export 'HKCU\Control Panel\Desktop\MuiCached' c:\Ensono\Regional\MuiCached.reg
+#    when: MuiCachedExported.stdout_lines[0] == "False"
+    
+  - name: Replace Hive locations for default.reg
+    raw: $SrcRegFile = Get-Content -Path c:\Ensono\Regional\int.reg; $NewRegFile = $SrcRegFile -replace "HKEY_CURRENT_USER" , "HKEY_USERS\DEFAULT_USER"; $NewRegFile | Set-Content -Path c:\Ensono\Regional\default.reg
+
+  - name: Replace Hive locations for welcome.reg
+    raw: $SrcRegFile = Get-Content -Path c:\Ensono\Regional\int.reg; $NewRegFile = $SrcRegFile -replace "HKEY_CURRENT_USER" , "HKEY_USERS\.DEFAULT"; $NewRegFile | Set-Content -Path c:\Ensono\Regional\welcome.reg
+    
+  - name: Replace Hive locations for Preload.reg for Default User
+    raw: $SrcRegFile = Get-Content -Path c:\Ensono\Regional\Preload.reg; $NewRegFile = $SrcRegFile -replace "HKEY_CURRENT_USER" , "HKEY_USERS\DEFAULT_USER"; $NewRegFile | Set-Content -Path c:\Ensono\Regional\PreloadDU.reg
+  
+  - name: Replace Hive locations for Preload.reg for .Default
+    raw: $SrcRegFile = Get-Content -Path c:\Ensono\Regional\Preload.reg; $NewRegFile = $SrcRegFile -replace "HKEY_CURRENT_USER" , "HKEY_USERS\.DEFAULT"; $NewRegFile | Set-Content -Path c:\Ensono\Regional\PreloadD.reg
+    
+#  - name: Replace Hive locations for MuiCached.reg for Default User
+#    raw: $SrcRegFile = Get-Content -Path c:\Ensono\Regional\MuiCached.reg; $NewRegFile = $SrcRegFile -replace "HKEY_CURRENT_USER" , "HKEY_USERS\DEFAULT_USER"; $NewRegFile | Set-Content -Path c:\Ensono\Regional\MuiCachedDU.reg
+  
+#  - name: Replace Hive locations for MuiCached.reg for .Default
+#    raw: $SrcRegFile = Get-Content -Path c:\Ensono\Regional\MuiCached.reg; $NewRegFile = $SrcRegFile -replace "HKEY_CURRENT_USER" , "HKEY_USERS\.DEFAULT"; $NewRegFile | Set-Content -Path c:\Ensono\Regional\MuiCachedD.reg    
+    
+  - name: Import the International settings from the registry file for default.reg
+    raw: $DefaultHKEY = "HKU\DEFAULT_USER"; $DefaultRegPath = "C:\Users\Default\NTUSER.DAT"; reg load $DefaultHKEY $DefaultRegPath; reg import "c:\Ensono\Regional\default.reg"; reg unload $DefaultHKEY
+    
+  - name: Import the Preload settings from the registry file for Default User
+    raw: $DefaultHKEY = "HKU\DEFAULT_USER"; $DefaultRegPath = "C:\Users\Default\NTUSER.DAT"; reg load $DefaultHKEY $DefaultRegPath; reg import "c:\Ensono\Regional\PreloadDU.reg"; reg unload $DefaultHKEY
+
+#  - name: Import the MuiCached settings from the registry file for Default User
+#    raw: $DefaultHKEY = "HKU\DEFAULT_USER"; $DefaultRegPath = "C:\Users\Default\NTUSER.DAT"; reg load $DefaultHKEY $DefaultRegPath; reg import "c:\Ensono\Regional\MuiCachedDU.reg"; reg unload $DefaultHKEY    
+    
+  - name: Import the International settings from the registry file for welcome.reg
+    raw: reg import "c:\Ensono\Regional\welcome.reg"
+    
+  - name: Import the Preload settings from the registry file for PreloadD.reg
+    raw: reg import "c:\Ensono\Regional\PreloadD.reg"
+    
+#  - name: Import the MuiCached settings from the registry file for MuiCachedD.reg
+#    raw: reg import "c:\Ensono\Regional\MuiCachedD.reg"
+    
+  - name: Update the sysprep file in relation to Locale
+    raw: $SysPrepFile = Get-Content -Path "{{SysPrepFile}}"; $EnSysPrepFile = $SysPrepFile -replace "en-US", "{{LanguageTag}}" ; $EnSysPrepFile | set-content -path "{{SysPrepFile}}"
+  
+  - name: Update the sysprep file in relation to Time Zone
+    raw: $SysPrepFile = Get-Content -Path "{{SysPrepFile}}"; $EnSysPrepFile = $SysPrepFile -replace "UTC", "{{TimeZone}}" ; $EnSysPrepFile | set-content -path "{{SysPrepFile}}"
