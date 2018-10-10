@@ -40,7 +40,13 @@
   "provisioners": [
     {
       "type"              : "shell-local",
-      "command"           : "ansible-playbook -vvv {{user `playbook`}}"
+      "command"           : "ansible-playbook /home/aflac-poc/git/ansible/plays/packer-web_servers_pre-prd.yml"
+    },
+ {
+      "type": "powershell",
+      "scripts": [
+        "../scripts/sysprep_bundleconfig.ps1"
+      ]
     },
     {
       "type"              : "windows-shell",
