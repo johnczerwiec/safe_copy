@@ -31,7 +31,7 @@ resource "aws_instance" "gic01" {
 #----------------------------------------------------- 
 # afl40gic02poc
 #-----------------------------------------------------
-resource "aws_instance" "gic02" {
+#resource "aws_instance" "gic02" {
 # lifecycle { prevent_destroy = "true" }
 #  ami                   	 = "ami-0d546cb42ded83d49"
 #  instance_type          	 = "m5.4xlarge"
