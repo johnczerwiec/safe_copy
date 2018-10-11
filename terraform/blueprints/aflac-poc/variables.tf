@@ -10,7 +10,7 @@ variable "ci_prefix"      { default="afl40"   			description="e.g. ccm43" }
 variable "ci_suffix"      { default="poc"   			description="e.g. ccm43" }
 variable "monitoring_tag" { default="not-required"   	description="e.g. datadog|not-required" }
 variable "backup_tag"     { default="not-backup"   		description="e.g. ccm_poc_daily" }
-variable "s3_bucket"      { default="aflac-poc"   		description="e.g. ccm-poc" }
+variable "s3_bucket"      { default="aflac-poc-ens"   	description="e.g. ccm-poc" }
 variable "key_name"       { default="aflac-poc"   		description="e.g. ccm-poc" }
 variable "cidr_ensmgmt"   { default="" 					description="e.g. 10.72.192.0/21" }
 variable "peer_owner_id"  { default="" 					description="e.g. Peer account number" }

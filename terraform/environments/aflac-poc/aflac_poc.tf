@@ -10,7 +10,7 @@ module environment {
   monitoring_tag     = "not-required"                       # e.g. datadog|not-required
   backup_tag         = "no-backup"                          # e.g. ccm_poc_daily - make sure to use _ not -
   key_name           = "aflac-poc"                          # e.g. ccm-poc 
-  s3_bucket          = "aflac-poc"                          # e.g. ccm-poc
+  s3_bucket          = "aflac-poc-ens"                      # e.g. ccm-poc
   cidr_ensmgmt       = "10.96.0.0/24"                       # e.g. 10.72.192.0/21
   peer_owner_id      = "695622663364"                       #e.g. Peer account number
   peer_vpc_id	     = "vpc-85e11ce3"                       #e.g. vpc-XXXXXXXX
