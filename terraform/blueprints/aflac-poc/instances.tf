@@ -32,7 +32,7 @@ resource "aws_instance" "gic01" {
 # afl40gic02poc
 #-----------------------------------------------------
 resource "aws_instance" "gic02" {
- lifecycle { prevent_destroy = "true" }
+# lifecycle { prevent_destroy = "true" }
   ami                   	 = "ami-0370e5bf38d26e2cb"
   instance_type          	 = "m5.4xlarge"
   key_name               	 = "${var.key_name}"
