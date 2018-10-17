@@ -76,7 +76,7 @@ resource "aws_instance" "gicmdb01" {
  disable_api_termination 	 = "true"
 
   tags {
-    Name                 = "${var.ci_prefix}gicmdb0${var.ci_suffix}"
+    Name                 = "${var.ci_prefix}gicmdb01${var.ci_suffix}"
     Description          = "${var.ci_suffix} App Instance"
     }
  root_block_device {
