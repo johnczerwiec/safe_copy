@@ -14,10 +14,9 @@
             "Sid": "EC2Access",
             "Effect": "Allow",
             "Action": ["ec2:*"],
-            "Resource": [
-                "*"
-            ]
+            "Resource": "*"
         },
+		{
 			"Effect":"Allow",
 			"Action":"iam:PassRole",
 			"Resource":" arn:aws:iam::420019824896:role/Web"
