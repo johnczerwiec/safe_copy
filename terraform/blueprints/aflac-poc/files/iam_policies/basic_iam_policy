@@ -2,25 +2,15 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "S3Access",
+            "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": [
+                "iam:PassRole",
                 "s3:Get*",
+                "ec2:*",
                 "s3:List*"
             ],
             "Resource": "*"
-        },
-        {
-            "Sid": "EC2Access",
-            "Effect": "Allow",
-            "Action": ["ec2:*"],
-            "Resource": "*"
-        },
-		{
-			"Effect":"Allow",
-			"Action":"iam:PassRole",
-			"Resource":" arn:aws:iam::420019824896:role/Web"
-    }
+        }
     ]
 }
-
