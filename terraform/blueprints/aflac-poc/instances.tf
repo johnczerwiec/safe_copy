@@ -95,6 +95,7 @@ resource "aws_instance" "gicmdb01" {
 #---------------------------------------------------------------------------------------
 resource "aws_instance" "gic" {
 # lifecycle { prevent_destroy = "true" }
+  count = "${var.gic_count}"
   ami                   	 = "${var.gic_type_ami}"
   instance_type          	 = "${var.gic_type}"
   key_name               	 = "${var.key_name}"
