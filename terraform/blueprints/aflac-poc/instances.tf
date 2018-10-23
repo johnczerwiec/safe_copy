@@ -31,32 +31,32 @@ resource "aws_instance" "gic01" {
 #----------------------------------------------------- 
 # afl40gic02poc
 #-----------------------------------------------------
-resource "aws_instance" "gic02" {
+#resource "aws_instance" "gic02" {
 # lifecycle { prevent_destroy = "true" }
-  ami                   	 = "ami-0370e5bf38d26e2cb"
-  instance_type          	 = "m5.4xlarge"
-  key_name               	 = "${var.key_name}"
-  vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
-  subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
-  iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
-  ebs_optimized         	 = "${var.ebs_opt_web}"
-  user_data 			 	 = "${template_file.windows_userdata.rendered}"
- disable_api_termination 	 = "true"
+#  ami                   	 = "ami-0370e5bf38d26e2cb"
+#  instance_type          	 = "m5.4xlarge"
+#  key_name               	 = "${var.key_name}"
+#  vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
+#  subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
+#  iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
+#  ebs_optimized         	 = "${var.ebs_opt_web}"
+#  user_data 			 	 = "${template_file.windows_userdata.rendered}"
+# disable_api_termination 	 = "true"
 
-  tags {
-    Name                 = "${var.ci_prefix}gic02${var.ci_suffix}"
-    Description          = "${var.ci_suffix} App Instance"
-    }
- root_block_device {
-    volume_type = "gp2"
-    volume_size = "500"
-  }
- ebs_block_device {
-    device_name = "xvdb"
-    volume_type = "gp2"
-    volume_size = "50"
-  }
-}
+# tags {
+#    Name                 = "${var.ci_prefix}gic02${var.ci_suffix}"
+#    Description          = "${var.ci_suffix} App Instance"
+#    }
+# root_block_device {
+#    volume_type = "gp2"
+#    volume_size = "500"
+#  }
+# ebs_block_device {
+#    device_name = "xvdb"
+#    volume_type = "gp2"
+#    volume_size = "50"
+#  }
+#}
 
 
 
@@ -91,7 +91,7 @@ resource "aws_instance" "gicmdb01" {
 }
 
 #--------------------------------------------------------------------------------------
-# afl40gic03poc,afl40gic04poc,afl40gic05poc & afl40gic06poc - from ami of afl40gic02poc (10/23)
+# afl40gic02poc,afl40gic03poc,afl40gic04poc & afl40gic05poc - from ami of afl40gic02poc (10/23)
 #---------------------------------------------------------------------------------------
 resource "aws_instance" "gic" {
 # lifecycle { prevent_destroy = "true" }
@@ -106,8 +106,8 @@ resource "aws_instance" "gic" {
   disable_api_termination 	 = "true"
 
   tags {
-    Name                 = "${var.ci_prefix}gic0${count.index+3}${var.ci_suffix}"
-    Description          = "${var.ci_suffix} App Instance${count.index+3}"
+    Name                 = "${var.ci_prefix}gic0${count.index+2}${var.ci_suffix}"
+    Description          = "${var.ci_suffix} App Instance${count.index+2}"
     }
  root_block_device {
     volume_type = "gp2"
