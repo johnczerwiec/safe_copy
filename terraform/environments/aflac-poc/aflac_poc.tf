@@ -17,8 +17,8 @@ module environment {
   peer_region	     = "us-east-1"                          #e.g. vpc-XXXXXXXX
 
 # EC2 specific - Count parameters
-  gic_type           = m5.4xlarge
-  gic_type_ami       = ami-0d1ef40e5d04f3097
+  gic_type           = "m5.4xlarge"
+  gic_type_ami       = "ami-0d1ef40e5d04f3097"
   gic_count          = 4
  
 }
