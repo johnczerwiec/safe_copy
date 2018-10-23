@@ -89,3 +89,33 @@ resource "aws_instance" "gicmdb01" {
     volume_size = "80"
   }
 }
+
+#--------------------------------------------------------------------------------------
+# afl40gic03poc,afl40gic04poc,afl40gic05poc & afl40gic06poc - from ami of afl40gic02poc (10/23)
+#---------------------------------------------------------------------------------------
+resource "aws_instance" "gic" {
+# lifecycle { prevent_destroy = "true" }
+  ami                   	 = "${var.gic_type_ami}"
+  instance_type          	 = "${var.gic_type}"
+  key_name               	 = "${var.key_name}"
+  vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
+  subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
+  iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
+  ebs_optimized         	 = "${var.ebs_opt_web}"
+  user_data 			 	 = "${template_file.windows_userdata.rendered}"
+  disable_api_termination 	 = "true"
+
+  tags {
+    Name                 = "${var.ci_prefix}gic0${count.index+3}${var.ci_suffix}"
+    Description          = "${var.ci_suffix} App Instance${count.index+3}"
+    }
+ root_block_device {
+    volume_type = "gp2"
+    volume_size = "500"
+  }
+ ebs_block_device {
+    device_name = "xvdb"
+    volume_type = "gp2"
+    volume_size = "50"
+  }
+}

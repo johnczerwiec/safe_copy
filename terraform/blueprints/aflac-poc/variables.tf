@@ -17,6 +17,9 @@ variable "peer_owner_id"  { default="" 					description="e.g. Peer account numbe
 variable "peer_vpc_id"    { default="" 					description="e.g. vpc-XXXXXXXX" }
 variable "peer_region"    { default="" 					description="e.g. us-east-1" }
 
+variable "gic_type"       {}
+variable "gic_type_ami"   {}
+variable "gic_count"      {}
 
 #------------------------------------------------
 # Autoscaling

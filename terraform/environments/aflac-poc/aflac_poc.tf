@@ -16,6 +16,11 @@ module environment {
   peer_vpc_id	     = "vpc-85e11ce3"                       #e.g. vpc-XXXXXXXX
   peer_region	     = "us-east-1"                          #e.g. vpc-XXXXXXXX
 
+# EC2 specific - Count parameters
+  gic_type           = m5.4xlarge
+  gic_type_ami       = ami-0d1ef40e5d04f3097
+  gic_count          = 4
+ 
 }
 
  data "terraform_remote_state" "selfvpc" {
