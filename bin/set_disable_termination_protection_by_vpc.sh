@@ -5,7 +5,7 @@ AWS="/usr/bin/aws"
 
 VPC_ID=$1
 if [ -z $1 ]; then
-  echo "Usage: $0 <VPC_ID>"
+  echo "Usage: $1 <VPC_ID>"
   exit -1
 fi
 
