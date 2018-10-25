@@ -100,11 +100,12 @@ resource "aws_instance" "gic" {
   instance_type          	 = "${var.gic_type}"
   key_name               	 = "${var.key_name}"
   vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
-  subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
+#  subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
+ subnet_id              	 = "${element(var.private_subnet_list, count.index)}"
   iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
   ebs_optimized         	 = "${var.ebs_opt_web}"
   user_data 			 	 = "${template_file.windows_userdata.rendered}"
-  disable_api_termination 	 = "true"
+#  disable_api_termination 	 = "true"
 
   tags {
     Name                 = "${var.ci_prefix}gic0${count.index+2}${var.ci_suffix}"
@@ -121,3 +122,5 @@ resource "aws_instance" "gic" {
     volume_size = "50"
   }
 }
+
+
