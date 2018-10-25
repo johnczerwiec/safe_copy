@@ -16,6 +16,7 @@ variable "cidr_ensmgmt"   { default="" 					description="e.g. 10.72.192.0/21" }
 variable "peer_owner_id"  { default="" 					description="e.g. Peer account number" }
 variable "peer_vpc_id"    { default="" 					description="e.g. vpc-XXXXXXXX" }
 variable "peer_region"    { default="" 					description="e.g. us-east-1" }
+variable "private_subnet_list" {type="list"}				#list of private subnets
 
 variable "gic_type"       {}
 variable "gic_type_ami"   {}
