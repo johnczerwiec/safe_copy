@@ -117,8 +117,7 @@ resource "aws_instance" "gic" {
  ebs_block_device {
     device_name = "xvdb"
 	delete_on_termination = "true"
-	encrypted = "true"
-    volume_type = "gp2"
+	volume_type = "gp2"
     volume_size = "50"
   }
 }
