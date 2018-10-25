@@ -15,7 +15,7 @@ module environment {
   peer_owner_id      = "695622663364"                       #e.g. Peer account number
   peer_vpc_id	     = "vpc-85e11ce3"                       #e.g. vpc-XXXXXXXX
   peer_region	     = "us-east-1"                          #e.g. vpc-XXXXXXXX
-  private_subnet_list = [ "${data.terraform_remote_state.selfvpc.private_subnetA}", "${data.terraform_remote_state.selfvpc.private_subnetB}" ] #e.g. subnet ID list
+  private_subnet_list = [ "${data.terraform_remote_state.selfvpc.PrivateSbA}", "${data.terraform_remote_state.selfvpc.PrivateSbB}" ] #e.g. subnet ID list
 
 # EC2 specific - Count parameters
   gic_type           = "m5.4xlarge"
