@@ -94,7 +94,7 @@ resource "aws_instance" "gicmdb01" {
 # afl40gic02poc,afl40gic03poc,afl40gic04poc & afl40gic05poc - from ami of afl40gic02poc (10/23)
 #---------------------------------------------------------------------------------------
 resource "aws_instance" "gic" {
-# lifecycle { prevent_destroy = "true" }
+ lifecycle { prevent_destroy = "true" }
   count = "${var.gic_count}"
   ami                   	 = "${var.gic_type_ami}"
   instance_type          	 = "${var.gic_type}"
