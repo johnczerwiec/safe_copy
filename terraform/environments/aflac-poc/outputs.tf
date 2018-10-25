@@ -1,2 +1,2 @@
-output "private_subnetA"         		{ value = "${module.environment.PrivateSbA}"}
-output "private_subnetB"         		{ value = "${module.environment.PrivateSbB}"}
+output "PrivateSbA"         		{ value = "${module.environment.PrivateSbA}"}
+output "PrivateSbB"         		{ value = "${module.environment.PrivateSbB}"}
