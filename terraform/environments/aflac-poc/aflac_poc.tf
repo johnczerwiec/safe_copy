@@ -19,7 +19,7 @@ module environment {
 # EC2 specific - Count parameters
   gic_type           = "m5.4xlarge"
   gic_type_ami       = "ami-0a761afc1ecd4d988"
-  gic_count          = 4
+  gic_count          = 35
  
 }
 
