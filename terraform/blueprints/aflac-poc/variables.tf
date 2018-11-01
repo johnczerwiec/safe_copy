@@ -22,6 +22,10 @@ variable "gic_type"       {}
 variable "gic_type_ami"   {}
 variable "gic_count"      {}
 
+variable "inst_type"       {}
+variable "inst_ami"   {}
+variable "inst_count"      {}
+
 #------------------------------------------------
 # Autoscaling
 #------------------------------------------------

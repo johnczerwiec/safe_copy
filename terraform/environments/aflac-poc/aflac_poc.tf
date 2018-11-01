@@ -24,7 +24,7 @@ module environment {
  
 # EC2 specific - Count parameters C5 instances 
   inst_type           = "c5.18xlarge"
-  inst_ami       = "ami-05acdd9697ee3255b"
+  inst_ami       	= "ami-05acdd9697ee3255b"
   inst_count          = 7
  
 }
