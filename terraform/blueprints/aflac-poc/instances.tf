@@ -91,7 +91,7 @@ resource "aws_instance" "gicmdb01" {
 }
 
 #--------------------------------------------------------------------------------------
-# afl40gic02poc,afl40gic03poc,afl40gic04poc & afl40gic05poc - from ami of afl40gic02poc (10/23)
+# afl40gic02poc,afl40gic03poc,afl40gic04poc & afl40gic05poc - from ami of afl40gic02poc (11/01)
 #---------------------------------------------------------------------------------------
 resource "aws_instance" "gic" {
 # lifecycle { prevent_destroy = "true" }
