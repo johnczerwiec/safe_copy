@@ -17,12 +17,19 @@ module environment {
   peer_region	     = "us-east-1"                          #e.g. vpc-XXXXXXXX
   private_subnet_list = [ "subnet-0b78e36dc58c18670", "subnet-043bc752ab4563224" ] 		#e.g. subnet ID list
 
-# EC2 specific - Count parameters
+# EC2 specific - Count parameters m5 Instances
   gic_type           = "m5.4xlarge"
   gic_type_ami       = "ami-05acdd9697ee3255b"
   gic_count          = 35
  
+# EC2 specific - Count parameters C5 instances 
+  inst_type           = "c5.18xlarge"
+  inst_ami       = "ami-05acdd9697ee3255b"
+  inst_count          = 7
+ 
 }
+
+
 
  data "terraform_remote_state" "selfvpc" {
   backend = "s3"
