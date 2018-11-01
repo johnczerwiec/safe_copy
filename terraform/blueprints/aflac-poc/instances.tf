@@ -142,8 +142,8 @@ resource "aws_instance" "cmpt" {
 #  disable_api_termination 	 = "true"
 
   tags {
-    Name                 = "${var.ci_prefix}cmpt0${count.index+2}${var.ci_suffix}"
-    Description          = "${var.ci_suffix} App Instance${count.index+2}"
+    Name                 = "${var.ci_prefix}cmpt0${count.index+1}${var.ci_suffix}"
+    Description          = "${var.ci_suffix} App Instance${count.index+1}"
     }
  root_block_device {
     volume_type = "gp2"
