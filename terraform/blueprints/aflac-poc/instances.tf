@@ -177,11 +177,11 @@ resource "aws_instance" "giclnx01" {
     }
  root_block_device {
     volume_type = "gp2"
-    volume_size = "100"
+    volume_size = "50"
   }
  ebs_block_device {
     device_name = "xvdb"
     volume_type = "gp2"
-    volume_size = "80"
+    volume_size = "20"
   }
 }
