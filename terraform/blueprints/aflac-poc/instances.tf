@@ -156,4 +156,32 @@ resource "aws_instance" "cmpt" {
 }
 
 
+#----------------------------------------------------- 
+# afl40giclnx01poc
+#-----------------------------------------------------
+resource "aws_instance" "giclnx01" {
+# lifecycle { prevent_destroy = "true" }
+  ami                   	 = "ami-0b59bfac6be064b78"
+  instance_type          	 = "m5.large"
+  key_name               	 = "${var.key_name}"
+  vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
+  subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
+  iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
+  ebs_optimized         	 = "${var.ebs_opt_web}"
+  user_data 			 	 = "${template_file.windows_userdata.rendered}"
+ disable_api_termination 	 = "true"
 
+  tags {
+    Name                 = "${var.ci_prefix}giclnx01${var.ci_suffix}"
+    Description          = "${var.ci_suffix} Linux App Instance"
+    }
+ root_block_device {
+    volume_type = "gp2"
+    volume_size = "100"
+  }
+ ebs_block_device {
+    device_name = "xvdb"
+    volume_type = "gp2"
+    volume_size = "80"
+  }
+}
