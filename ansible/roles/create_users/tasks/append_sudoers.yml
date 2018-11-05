@@ -1,0 +1,11 @@
+---
+
+# Append sudoers on all
+
+- name: Append Sudoers
+  tags: add_sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    insertafter: EOF
+    line: 'bhagavan  ALL=(ALL) NOPASSWD: ALL'
+    validate: '/usr/sbin/visudo -cf %s'

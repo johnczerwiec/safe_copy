@@ -1,0 +1,10 @@
+---
+
+# Note - UIDs should be unique to one user in this file. i.e. an adm_user can't have the same uid as a *different* username in the sftp_users group
+# but a user should have the same uid if they're in multiple groups - e.g. jmcmillan using 1234 in adm_users should also be jmcmillan/1234 in sftp_users
+
+wdspoc_admins:
+  - { account: lapps, uid: 70433, comment: "John.Lohan@windstream.com" }
+  - { account: thoma87, uid: 16285, comment: "James.Thomas@windstream.com" }
+
+

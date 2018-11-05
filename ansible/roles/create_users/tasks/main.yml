@@ -1,0 +1,6 @@
+---
+
+# Create the following users on all
+  - include: create_users.yml
+  - include: append_sudoers.yml
+  

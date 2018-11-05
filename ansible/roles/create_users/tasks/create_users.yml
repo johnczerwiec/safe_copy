@@ -1,0 +1,40 @@
+---
+
+## Include central user dictionary
+
+# Include platform specific groups
+- include_vars: "aflacpoc_admins/groups.yml"
+
+# Create the prerequisite groups
+- name: Create Groups
+  tags: create_users-aflacpoc_admins
+  group: name={{ item }} state=present
+  with_items: "{{ groups_to_create }}"
+
+# Create WDS POC Users
+- name: Create aflacpoc Users - Create account
+  tags: create_aflacpoc_admins
+# user: name={{ item.account }} shell=/bin/bash state=present comment="{{ item.comment }}"
+  user: name={{ item.account }} shell=/bin/bash state=present comment="{{ item.comment }}" uid={{ item.uid }} groups={{ groups_to_join }} append=yes
+  with_items: '{{ aflacpoc_admins }}'
+
+# Create the SSH directory and  key
+- name: Create aflacpoc Users - Create .ssh directory
+  tags: create_aflacpoc_admins
+  file: path=/home/{{ item.account }}/.ssh owner={{ item.account }} group={{ item.account }} mode=0700 state=directory
+  with_items: '{{ aflacpoc_admins }}'
+
+- name: Create aflacpoc Users - Deploy the ssh_key
+  tags: create_aflacpoc_admins
+  copy: src={{ item.account }} dest=/home/{{ item.account }}/.ssh/authorized_keys owner={{ item.account }} group={{ item.account }} mode=400 backup=yes
+  with_items: '{{ aflacpoc_admins }}'
+
+#- name: Create .aws directory in users home dir for config file
+#  tags: create_users
+#  file: path=/home/{{ item.account }}/.aws owner={{ item.account }} group={{ item.account }} mode=0750 state=directory
+#  with_items: '{{ aflacpoc_users }}'
+
+#- name: Deploy AWS config file to set region (required for s3 api)
+#  tags: create_users
+#  copy: src=aws-config dest=/home/{{ item.account }}/.aws/config owner={{ item.account }} group={{ item.account }} mode=600 backup=yes
+#  with_items: '{{ aflacpoc_users }}'

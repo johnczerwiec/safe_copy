@@ -1,0 +1,3 @@
+# Root Sudo
+lapps  ALL=(ALL) NOPASSWD: ALL
+thoma87  ALL=(ALL) NOPASSWD: ALL
