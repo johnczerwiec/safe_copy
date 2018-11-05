@@ -1,6 +1,0 @@
----
-
-groups_to_create:
-  - wdspoc_admins
-
-groups_to_join: wdspoc_admins

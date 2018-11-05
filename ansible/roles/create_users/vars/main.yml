@@ -4,7 +4,7 @@
 # but a user should have the same uid if they're in multiple groups - e.g. jmcmillan using 1234 in adm_users should also be jmcmillan/1234 in sftp_users
 
 wdspoc_admins:
-  - { account: lapps, uid: 70433, comment: "John.Lohan@windstream.com" }
-  - { account: thoma87, uid: 16285, comment: "James.Thomas@windstream.com" }
+  - { account: bhagavan, comment: "Bhagavan Cheruvu <BCheruvu@aflac.com>" }
+  - { account: yuchen,   comment: "Yuchen Wu <YWu@aflac.com>" }
 
 

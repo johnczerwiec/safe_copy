@@ -1,0 +1,6 @@
+---
+
+groups_to_create:
+  - aflacpoc_admins
+
+groups_to_join: aflacpoc_admins
