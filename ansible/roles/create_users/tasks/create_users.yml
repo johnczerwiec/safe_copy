@@ -11,11 +11,11 @@
   group: name={{ item }} state=present
   with_items: "{{ groups_to_create }}"
 
-# Create WDS POC Users
+# Create Aflac POC Users
 - name: Create aflacpoc Users - Create account
   tags: create_aflacpoc_admins
-# user: name={{ item.account }} shell=/bin/bash state=present comment="{{ item.comment }}"
-  user: name={{ item.account }} shell=/bin/bash state=present comment="{{ item.comment }}" uid={{ item.uid }} groups={{ groups_to_join }} append=yes
+  user: name={{ item.account }} shell=/bin/bash state=present comment="{{ item.comment }}"
+# user: name={{ item.account }} shell=/bin/bash state=present comment="{{ item.comment }}" uid={{ item.uid }} groups={{ groups_to_join }} append=yes
   with_items: '{{ aflacpoc_admins }}'
 
 # Create the SSH directory and  key
