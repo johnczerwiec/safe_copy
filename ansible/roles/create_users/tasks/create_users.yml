@@ -12,19 +12,19 @@
   with_items: "{{ groups_to_create }}"
 
 # Create Aflac POC Users
-- name: Create aflacpoc Users - Create account
+- name: Create AFLACPOC Users - Create account
   tags: create_aflacpoc_admins
   user: name={{ item.account }} shell=/bin/bash state=present comment="{{ item.comment }}"
 # user: name={{ item.account }} shell=/bin/bash state=present comment="{{ item.comment }}" uid={{ item.uid }} groups={{ groups_to_join }} append=yes
   with_items: '{{ aflacpoc_admins }}'
 
 # Create the SSH directory and  key
-- name: Create aflacpoc Users - Create .ssh directory
+- name: Create AFLACPOC Users - Create .ssh directory
   tags: create_aflacpoc_admins
   file: path=/home/{{ item.account }}/.ssh owner={{ item.account }} group={{ item.account }} mode=0700 state=directory
   with_items: '{{ aflacpoc_admins }}'
 
-- name: Create aflacpoc Users - Deploy the ssh_key
+- name: Create AFLACPOC Users - Deploy the ssh_key
   tags: create_aflacpoc_admins
   copy: src={{ item.account }} dest=/home/{{ item.account }}/.ssh/authorized_keys owner={{ item.account }} group={{ item.account }} mode=400 backup=yes
   with_items: '{{ aflacpoc_admins }}'
