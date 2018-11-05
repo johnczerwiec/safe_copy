@@ -162,7 +162,7 @@ resource "aws_instance" "cmpt" {
 resource "aws_instance" "giclnx01" {
 # lifecycle { prevent_destroy = "true" }
   ami                   	 = "ami-0b59bfac6be064b78"
-  instance_type          	 = "m5.large"
+  instance_type          	 = "m4.2xlarge"
   key_name               	 = "${var.key_name}"
   vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
   subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
@@ -177,7 +177,7 @@ resource "aws_instance" "giclnx01" {
     }
  root_block_device {
     volume_type = "gp2"
-    volume_size = "50"
+    volume_size = "40"
   }
  ebs_block_device {
     device_name = "xvdb"
