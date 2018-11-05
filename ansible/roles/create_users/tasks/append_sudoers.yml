@@ -7,5 +7,5 @@
   lineinfile:
     dest: /etc/sudoers
     insertafter: EOF
-    line: 'bhagavan  ALL=(ALL) NOPASSWD: ALL'
+    line: 'yuchen  ALL=(ALL) NOPASSWD: ALL'
     validate: '/usr/sbin/visudo -cf %s'
