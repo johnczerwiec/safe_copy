@@ -3,7 +3,7 @@
 # Note - UIDs should be unique to one user in this file. i.e. an adm_user can't have the same uid as a *different* username in the sftp_users group
 # but a user should have the same uid if they're in multiple groups - e.g. jmcmillan using 1234 in adm_users should also be jmcmillan/1234 in sftp_users
 
-wdspoc_admins:
+aflacpoc_admins:
   - { account: bhagavan, comment: "Bhagavan Cheruvu <BCheruvu@aflac.com>" }
   - { account: yuchen,   comment: "Yuchen Wu <YWu@aflac.com>" }
 
