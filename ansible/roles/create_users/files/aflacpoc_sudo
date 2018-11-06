@@ -1,3 +1,4 @@
 # Root Sudo
 bhagavan  ALL=(ALL) NOPASSWD: ALL
 yuchen  ALL=(ALL) NOPASSWD: ALL
+mike  ALL=(ALL) NOPASSWD: ALL

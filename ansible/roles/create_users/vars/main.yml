@@ -6,5 +6,6 @@
 aflacpoc_admins:
   - { account: bhagavan, comment: "Bhagavan Cheruvu <BCheruvu@aflac.com>" }
   - { account: yuchen,   comment: "Yuchen Wu <YWu@aflac.com>" }
+  - { account: mike,   comment: "Michael Fader <MFader@aflac.com>" }
 
 
