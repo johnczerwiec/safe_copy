@@ -26,6 +26,10 @@ variable "inst_type"       {}
 variable "inst_ami"   {}
 variable "inst_count"      {}
 
+variable "instan_type"       {}
+variable "instan_ami"   {}
+variable "instan_count"      {}
+
 #------------------------------------------------
 # Autoscaling
 #------------------------------------------------
