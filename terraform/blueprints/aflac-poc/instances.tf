@@ -197,7 +197,7 @@ resource "aws_instance" "c5n" {
   instance_type          	 = "${var.instan_type}"
   key_name               	 = "${var.key_name}"
   vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
-  subnet_id              	 = "${aws_subnet.PrivateSbA.id}"
+  subnet_id              	 = "${aws_subnet.PrivateSbB.id}"
 # subnet_id              	 = "${element(var.private_subnet_list, count.index)}"
   iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
   ebs_optimized         	 = "${var.ebs_opt_web}"
