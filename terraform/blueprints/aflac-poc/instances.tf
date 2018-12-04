@@ -185,3 +185,37 @@ resource "aws_instance" "giclnx01" {
     volume_size = "20"
   }
 }
+
+
+#--------------------------------------------------------------------------------------
+# afl40gic  C5n Compute instances from ami of afl40gic02poc (11/01)
+#---------------------------------------------------------------------------------------
+resource "aws_instance" "c5n" {
+# lifecycle { prevent_destroy = "true" }
+  count = "${var.inst_count}"
+  ami                   	 = "${var.inst_ami}"
+  instance_type          	 = "${var.inst_type}"
+  key_name               	 = "${var.key_name}"
+  vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
+  subnet_id              	 = "${aws_subnet.PrivateSbB.id}"
+# subnet_id              	 = "${element(var.private_subnet_list, count.index)}"
+  iam_instance_profile       = "${module.iam_role_Web.iam_instance_profile}"
+  ebs_optimized         	 = "${var.ebs_opt_web}"
+  user_data 			 	 = "${template_file.windows_userdata.rendered}"
+#  disable_api_termination 	 = "true"
+
+  tags {
+    Name                 = "${var.ci_prefix}c5n0${count.index+1}${var.ci_suffix}"
+    Description          = "${var.ci_suffix} App Instance${count.index+1}"
+    }
+ root_block_device {
+    volume_type = "gp2"
+    volume_size = "500"
+  }
+# ebs_block_device {
+#    device_name = "xvdb"
+#	volume_type = "gp2"
+#   volume_size = "50"
+#  }
+}
+

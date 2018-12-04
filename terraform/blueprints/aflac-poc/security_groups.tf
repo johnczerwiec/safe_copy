@@ -67,6 +67,34 @@ resource "aws_security_group" "cust_sg" {
     protocol = "icmp"
     cidr_blocks = ["0.0.0.0/0" ]
   }
+  
+  ingress {
+    from_port = 2891
+    to_port = 2891
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/8", "10.48.24.0/24" ]
+  }
+  
+  ingress {
+    from_port = 2892
+    to_port = 2892
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/8", "10.48.24.0/24" ]
+  }
+  
+  ingress {
+    from_port = 3891
+    to_port = 3891
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/8", "10.48.24.0/24" ]
+  }
+  
+  ingress {
+    from_port = 3892
+    to_port = 3892
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/8", "10.48.24.0/24" ]
+  }
 
 
  # OUTBOUND
