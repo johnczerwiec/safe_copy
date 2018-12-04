@@ -188,13 +188,13 @@ resource "aws_instance" "giclnx01" {
 
 
 #--------------------------------------------------------------------------------------
-# afl40gic  C5n Compute instances from ami of afl40gic02poc (11/01)
+# afl40gic  C5n Compute instances from ami of afl40gic02poc (12/04)
 #---------------------------------------------------------------------------------------
 resource "aws_instance" "c5n" {
 # lifecycle { prevent_destroy = "true" }
-  count = "${var.inst_count}"
-  ami                   	 = "${var.inst_ami}"
-  instance_type          	 = "${var.inst_type}"
+  count = "${var.instan_count}"
+  ami                   	 = "${var.instan_ami}"
+  instance_type          	 = "${var.instan_type}"
   key_name               	 = "${var.key_name}"
   vpc_security_group_ids	 = [ "${aws_security_group.ensono_mgmt.id}", "${aws_security_group.cust_sg.id}" ]
   subnet_id              	 = "${aws_subnet.PrivateSbB.id}"
