@@ -30,7 +30,7 @@ module environment {
 # EC2 specific - Count parameters C5 instances 
   instan_type           = "c5n.18xlarge"
   instan_ami       	= "ami-05acdd9697ee3255b"
-  instan_count          = 7 
+  instan_count          = 2 
    
 }
 
